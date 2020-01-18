@@ -7,9 +7,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -75,6 +73,7 @@ public class JobData {
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
+            aValue = aValue.toLowerCase();
 
             if (aValue.contains(value)) {
                 jobs.add(row);
@@ -83,6 +82,36 @@ public class JobData {
 
         return jobs;
     }
+
+    public static void findByValue(String termSearched) {
+        // load data, if not already loaded
+        loadData();
+        ArrayList<HashMap<String, String>> filteredJob = new ArrayList<>();
+
+        for(HashMap<String, String> directory : allJobs) {
+            for(String jobListings : directory.values()) {
+                jobListings = jobListings.toLowerCase();
+                if(jobListings.contains(termSearched)) {
+                    filteredJob.add(directory);
+                }
+            }
+
+        }
+        if(filteredJob.size() == 0) {
+                System.out.println("No Jobs Here");
+            } else {
+                for(HashMap<String, String> jobListing : filteredJob) {
+                    System.out.println("*****");
+                    for(Map.Entry<String,String> jobEntry : jobListing.entrySet()) {
+                        System.out.println(jobEntry.getKey() + ": " + jobEntry.getValue());
+                    }
+                    System.out.println("***** \n");
+                }
+
+            }
+
+    }
+
 
     /**
      * Read in data from a CSV file and store it in a list

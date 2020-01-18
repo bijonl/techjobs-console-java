@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
 
+import static org.launchcode.techjobs.console.JobData.findByValue;
+
 /**
  * Created by LaunchCode
  */
@@ -60,9 +62,10 @@ public class TechJobs {
                 // What is their search term?
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
+                searchTerm = searchTerm.toLowerCase();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    findByValue(searchTerm);
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
